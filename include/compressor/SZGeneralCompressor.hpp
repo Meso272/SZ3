@@ -56,6 +56,8 @@ namespace SZ {
             {
                 auto inter_begin = inter_block_range->begin();
                 auto inter_end = inter_block_range->end();
+                std::ofstream ofile;
+                ofile.open("predicted_value.txt");
                 for (auto block = inter_begin; block != inter_end; ++block) {
 
                     // std::cout << *block << " " << lp.predict(block) << std::endl;
@@ -79,10 +81,14 @@ namespace SZ {
                     auto intra_begin = intra_block_range->begin();
                     auto intra_end = intra_block_range->end();
                     for (auto element = intra_begin; element != intra_end; ++element) {
+                        auto prediction=predictor_withfallback->predict(element);
                         quant_inds[quant_count++] = quantizer.quantize_and_overwrite(
-                                *element, predictor_withfallback->predict(element));
+                                *element, prediction);
+                        ofile<<prediction<<std::endl;
+                        
                     }
                 }
+                ofile.close();
             }
 
             clock_gettime(CLOCK_REALTIME, &end);
