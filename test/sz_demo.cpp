@@ -57,7 +57,7 @@ float SZ_Compress(std::unique_ptr<T[]> const &data,
     std::cout << "Compressed size = " << compressed_size << std::endl;
 
     std::stringstream ss;
-    ss << src_file_name.substr(src_file_name.rfind('/') + 1) << "." << relative_error_bound << ".sz3";
+    ss << src_file_name.substr(src_file_name.rfind('/') + 1) <<".sz3";
     auto compressed_file_name = ss.str();
     SZ::writefile(compressed_file_name.c_str(), compressed.get(), compressed_size);
     std::cout << "Compressed file = " << compressed_file_name << std::endl;
